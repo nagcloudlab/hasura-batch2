@@ -1,0 +1,39 @@
+
+
+
+Representational state transfer (REST)
+
+
+Uniform interface
+
+
+    1. Resource identification in requests i.e URI
+
+        e.g
+
+        /api/v1/photos
+        /api/v1/photos/{id}
+        /api/v1/photos/{id}/comments
+        /api/v1/photos/{id}/comments/{id}
+        /api/v1/users
+        /api/v1/users/{id}
+
+    2. Resource manipulation through representations
+
+        - application/json    
+
+    3. Self-descriptive messages a.k.a headers
+
+    4. Hypermedia as the engine of application state (HATEOAS) 
+
+----------------------------------------------------------------------            
+
+----------------------------------------------------------------------
+
+programming language : Javascript
+runtime              : Node.js
+framework            : Express
+
+------------------------------------------------------------------------
+
+
