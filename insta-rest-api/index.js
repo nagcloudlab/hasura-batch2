@@ -46,7 +46,6 @@ app.get("/api/v1/photos/:id/comments", (req, res) => {
     res.status(200).json(photoComments)
 })
 
-
 app.listen(3000, () => {
     console.log("server running at http://localhost:3000/")
 })

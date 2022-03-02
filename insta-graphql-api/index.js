@@ -36,15 +36,19 @@ const typeDefs = gql`
         comment: String
     }
     type Photo{
-        id: ID
-        photo_url: String
+        id: ID!
+        photo_url: String!
         description: String
+        isPublished: Boolean
         comments: [Comment]
     }
+
+    // read operation
     type Query{
         photos:[Photo]
-        photo_by_pk(id:ID):Photo
+        photo_by_pk(id:ID!): Photo
     }
+
 `
 
 const resolvers = {
