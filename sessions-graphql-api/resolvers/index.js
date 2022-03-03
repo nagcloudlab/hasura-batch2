@@ -1,20 +1,48 @@
-
-const sessions = require('../data/sessions.json')
 const _ = require('lodash')
-const axios = require('axios')
 
 module.exports = {
     Query: {
-        ping: () => {
-            return "pong"
+        sessions: (parent, args, { dataSources }, info) => {
+            return dataSources.sessionAPI.getSessions()
         },
-        sessions: (parent, args, context, info) => {
-            return _.filter(sessions, args);
-        },
-        sessionById: (parent, args, context, info) => {
+        sessionById: (parent, args, { dataSources }, info) => {
             let { id } = args
-            const session = _.filter(sessions, { id: parseInt(id) });
-            return session[0]
+            return dataSources.sessionAPI.getSessionById(id)
         },
-    }
+        speakers: (parent, args, { dataSources }, info) => {
+            return dataSources.speakerAPI.getSpeakers(args);
+        },
+        speakerById: (parent, { id }, { dataSources }, info) => {
+            return dataSources.speakerAPI.getSpeakerById(id)
+        }
+    },
+    Speaker: {
+        sessions: (speaker, args, { dataSources }, info) => {
+            const sessions = dataSources.sessionAPI.getSessions()
+            return sessions.filter(session => {
+                return _.filter(session.speakers, { id: speaker.id }).length > 0
+            })
+        }
+    },
+    Session: {
+        speakers: async (session, args, { dataSources }, info) => {
+            const speakers = await dataSources.speakerAPI.getSpeakers();
+            const returns = speakers.filter((speaker) => {
+                return _.filter(session.speakers, { id: speaker.id }).length > 0;
+            });
+            return returns;
+        }
+    },
+    Mutation: {
+        deleteSession: (parent, args, { dataSources }) => {
+            let { id } = args
+            return dataSources.sessionAPI.deleteSession(id)
+        },
+        addNewSession: (parent, { session }, { dataSources }) => {
+            return dataSources.sessionAPI.addSession(session)
+        },
+        toggleFavoriteSession: (parent, { id }, { dataSources }, info) => {
+            return dataSources.sessionAPI.toggleFavoriteSession(id)
+        },
+    },
 }
