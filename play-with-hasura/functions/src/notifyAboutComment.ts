@@ -30,7 +30,6 @@ export const notifyAboutCommentHandler = async (
             }),
             headers: { ...session_variables, ...request.headers },
         });
-
         const {
             data: {
                 photos_by_pk: { photo_url, description },
@@ -53,16 +52,16 @@ export const notifyAboutCommentHandler = async (
             to: "nagcloudla@gmail.com",
             subject: "New Comment to the photo",
             html: `
-        <html>
-          <head></head>
-          <body>
-            <h1>Hi there!</h1>
-            <br> <br>
-            <p>You have got a new comment to your photo: <a href="${photo_url}">${description}</a> </p>
-            <p>The comment text is: <i>${comment}</i></p>
-          </body>
-        </html>     
-    `,
+            <html>
+            <head></head>
+            <body>
+                <h1>Hi there!</h1>
+                <br> <br>
+                <p>You have got a new comment to your photo: <a href="${photo_url}">${description}</a> </p>
+                <p>The comment text is: <i>${comment}</i></p>
+            </body>
+            </html>     
+        `,
         });
 
         logger.log(getTestMessageUrl(sentEmail));
