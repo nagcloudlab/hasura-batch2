@@ -43,7 +43,7 @@ const Photo = ({ value: photo }) => {
                 </div>
                 <div className="col-6">
                     <div className="display-6">
-                        {renderComments()}
+                        {/* {renderComments()} */}
                     </div>
                     <CommentForm onSubmit={comment => addNewComment(comment)} />
                 </div>

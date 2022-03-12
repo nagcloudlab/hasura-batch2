@@ -1,6 +1,7 @@
 import Photo from "./Photo"
 import {
     gql,
+    useQuery,
     useSubscription
 } from "@apollo/client";
 
@@ -10,26 +11,22 @@ subscription GetPhotos{
       id
       photo_url
       description
-      comments(limit:10){
-        id
-        comment
-        created_at
-      }
     }
   }
 `;
 
 const PhotoList = () => {
     const { loading, error, data } = useSubscription(GET_PHOTOS) // POST: http://hasura-server
-
+    console.log(data)
     if (loading) return <p>Loading...</p>;
     if (error) return <p>Error :(</p>;
 
     const renderPhotos = () => {
         if (data) {
-            return data.photos.map(photo => {
-                return <Photo key={photo.id} value={photo} />
-            })
+            if (data.photos)
+                return data.photos.map(photo => {
+                    return <Photo key={photo.id} value={photo} />
+                })
         }
     }
 
