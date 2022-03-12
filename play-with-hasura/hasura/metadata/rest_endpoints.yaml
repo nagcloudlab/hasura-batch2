@@ -1,0 +1,27 @@
+- definition:
+    query:
+      collection_name: allowed-queries
+      query_name: GET_photos
+  url: photos
+  methods:
+  - GET
+  name: GET_photos
+  comment: null
+- definition:
+    query:
+      collection_name: allowed-queries
+      query_name: POST_photo
+  url: photos
+  methods:
+  - POST
+  name: POST_photo
+  comment: null
+- definition:
+    query:
+      collection_name: allowed-queries
+      query_name: GET_photo
+  url: photos/:id
+  methods:
+  - GET
+  name: GET_photo
+  comment: null

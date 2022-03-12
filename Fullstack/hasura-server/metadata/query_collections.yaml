@@ -1,0 +1,12 @@
+- name: allowed-queries
+  definition:
+    queries:
+    - name: GET_tj_photo
+      query: |-
+        query MyQuery {
+          photos_by_pk(id: "c0ab84d1-100a-444b-ab84-51a9712dedc9") {
+            id
+            photo_url
+            description
+          }
+        }

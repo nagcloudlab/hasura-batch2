@@ -1,0 +1,30 @@
+- name: allowed-queries
+  definition:
+    queries:
+    - name: GET_photos
+      query: |-
+        query GET_PHOTOS{
+          photos{
+            id
+            photo_url
+            description
+          }
+        }
+    - name: GET_photo
+      query: |-
+        query GET_PHOTOS($id:Int!) {
+          photos_by_pk(id: $id) {
+            id
+            photo_url
+            description
+          }
+        }
+    - name: POST_photo
+      query: |-
+        mutation CreateNewPhoto($photo_url:String,$description:String) {
+          insert_photos_one(object: {photo_url: $photo_url, description: $description}) {
+            description
+            photo_url
+            id
+          }
+        }

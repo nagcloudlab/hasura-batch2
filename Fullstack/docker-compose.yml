@@ -1,0 +1,32 @@
+version: "3.6"
+services:
+  postgres:
+    image: postgres:12
+    restart: always
+    volumes:
+      - ./db_data:/var/lib/postgresql/data
+    environment:
+      POSTGRES_PASSWORD: postgrespassword
+  graphql-engine:
+    image: hasura/graphql-engine:v2.0.3.cli-migrations-v3
+    env_file:
+      - ./hasura-server/.env
+    volumes:
+      - ./hasura-server/migrations:/hasura-migrations
+      - ./hasura-server/metadata:/hasura-metadata
+    ports:
+      - "8080:8080"
+    depends_on:
+      - "postgres"
+    restart: always
+    environment:
+      ## enable the console served by server
+      HASURA_GRAPHQL_ENABLE_CONSOLE: "false" # set to "false" to disable console
+      ## enable debugging mode. It is recommended to disable this in production
+      HASURA_GRAPHQL_DEV_MODE: "true"
+      HASURA_GRAPHQL_ENABLED_LOG_TYPES: startup, http-log, webhook-log, websocket-log, query-log
+      ## uncomment next line to set an admin secret
+      HASURA_GRAPHQL_UNAUTHORIZED_ROLE: anonymous
+      #HASURA_GRAPHQL_AUTH_HOOK: http://host.docker.internal:5001/hasura-course/us-central1/authHook
+volumes:
+  db_data:

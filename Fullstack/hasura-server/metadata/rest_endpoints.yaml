@@ -1,0 +1,9 @@
+- definition:
+    query:
+      collection_name: allowed-queries
+      query_name: GET_tj_photo
+  url: photo_tj
+  methods:
+  - GET
+  name: GET_tj_photo
+  comment: null

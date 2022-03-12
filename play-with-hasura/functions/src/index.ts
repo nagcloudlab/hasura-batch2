@@ -5,6 +5,8 @@ import { notifyAboutCommentHandler } from "./notifyAboutComment";
 import { createUserHandler } from "./createUser";
 import { getUserHandler } from "./getUser";
 import initApolloServer from "./getUserProfile";
+import { loginHandler } from "./loginUser";
+import { authHookHandler } from "./authHook";
 
 
 
@@ -29,6 +31,8 @@ export const notifyAboutComment = functions.https.onRequest(
 );
 export const createUser = functions.https.onRequest(createUserHandler);
 export const getUser = functions.https.onRequest(getUserHandler);
+export const login = functions.https.onRequest(loginHandler);
+export const authHook = functions.https.onRequest(authHookHandler);
 
 
 export const getUserProfile = functions.https.onRequest(

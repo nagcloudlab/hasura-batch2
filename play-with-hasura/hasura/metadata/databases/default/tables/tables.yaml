@@ -1,0 +1,4 @@
+- "!include public_cities.yaml"
+- "!include public_comments.yaml"
+- "!include public_photos.yaml"
+- "!include public_videos.yaml"
