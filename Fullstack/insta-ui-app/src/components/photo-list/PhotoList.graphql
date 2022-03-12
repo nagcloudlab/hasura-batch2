@@ -1,0 +1,15 @@
+query GetUserPhotos {
+  photos {
+    id
+    photo_url
+    created_at
+    firebase_user_profile {
+      displayName
+    }
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+}

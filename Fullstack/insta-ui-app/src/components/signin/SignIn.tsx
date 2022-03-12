@@ -49,6 +49,7 @@ const SignIn = (props: Props) => {
     const userLoggedInHandler = (data: MutationResult<SignInMutation>["data"]) => {
         if (data?.login) {
             localStorage.setItem("user_token", data.login.accessToken);
+            console.log(history)
             history.push(`/profile/${data.login.id}`);
         }
     };

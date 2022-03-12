@@ -1260,6 +1260,26 @@ export type Uuid_Comparison_Exp = {
   _nin?: InputMaybe<Array<Scalars['uuid']>>;
 };
 
+export type GetPhotoQueryVariables = Exact<{
+  photoId: Scalars['uuid'];
+}>;
+
+
+export type GetPhotoQuery = { __typename?: 'query_root', photos_by_pk?: { __typename?: 'photos', id: any, description: string, created_at: any, photo_url: string, comments: Array<{ __typename?: 'comments', id: any, comment: string, created_at: any, firebase_user_profile?: { __typename?: 'UserProfile', displayName?: string | null } | null }> } | null };
+
+export type InsertCommentMutationVariables = Exact<{
+  comment: Scalars['String'];
+  photoId: Scalars['uuid'];
+}>;
+
+
+export type InsertCommentMutation = { __typename?: 'mutation_root', insert_comments_one?: { __typename?: 'comments', id: any, comment: string, created_at: any, firebase_user_profile?: { __typename?: 'UserProfile', displayName?: string | null } | null } | null };
+
+export type GetUserPhotosQueryVariables = Exact<{ [key: string]: never; }>;
+
+
+export type GetUserPhotosQuery = { __typename?: 'query_root', photos: Array<{ __typename?: 'photos', id: any, photo_url: string, created_at: any, firebase_user_profile?: { __typename?: 'UserProfile', displayName?: string | null } | null, comments_aggregate: { __typename?: 'comments_aggregate', aggregate?: { __typename?: 'comments_aggregate_fields', count: number } | null } }> };
+
 export type SignInMutationVariables = Exact<{
   email: Scalars['String'];
   password: Scalars['String'];
@@ -1277,6 +1297,21 @@ export type SignUpMutationVariables = Exact<{
 
 export type SignUpMutation = { __typename?: 'mutation_root', create_user?: { __typename?: 'User', displayName?: string | null, email: string, id: string } | null };
 
+export type UploadPhotoMutationVariables = Exact<{
+  base64image: Scalars['String'];
+}>;
+
+
+export type UploadPhotoMutation = { __typename?: 'mutation_root', upload_photo?: { __typename?: 'UploadResult', url: string } | null };
+
+export type InsertPhotoMutationVariables = Exact<{
+  photoUrl: Scalars['String'];
+  description: Scalars['String'];
+}>;
+
+
+export type InsertPhotoMutation = { __typename?: 'mutation_root', insert_photos?: { __typename?: 'photos_mutation_response', affected_rows: number, returning: Array<{ __typename?: 'photos', description: string, photo_url: string, created_at: any }> } | null };
+
 export type GetProfileQueryVariables = Exact<{
   id: Scalars['String'];
 }>;
@@ -1285,6 +1320,135 @@ export type GetProfileQueryVariables = Exact<{
 export type GetProfileQuery = { __typename?: 'query_root', user_profile?: { __typename?: 'User', id: string, email: string, displayName?: string | null } | null };
 
 
+export const GetPhotoDocument = gql`
+    query GetPhoto($photoId: uuid!) {
+  photos_by_pk(id: $photoId) {
+    id
+    description
+    created_at
+    photo_url
+    comments {
+      id
+      comment
+      created_at
+      firebase_user_profile {
+        displayName
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetPhotoQuery__
+ *
+ * To run a query within a React component, call `useGetPhotoQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetPhotoQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetPhotoQuery({
+ *   variables: {
+ *      photoId: // value for 'photoId'
+ *   },
+ * });
+ */
+export function useGetPhotoQuery(baseOptions: Apollo.QueryHookOptions<GetPhotoQuery, GetPhotoQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetPhotoQuery, GetPhotoQueryVariables>(GetPhotoDocument, options);
+      }
+export function useGetPhotoLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetPhotoQuery, GetPhotoQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetPhotoQuery, GetPhotoQueryVariables>(GetPhotoDocument, options);
+        }
+export type GetPhotoQueryHookResult = ReturnType<typeof useGetPhotoQuery>;
+export type GetPhotoLazyQueryHookResult = ReturnType<typeof useGetPhotoLazyQuery>;
+export type GetPhotoQueryResult = Apollo.QueryResult<GetPhotoQuery, GetPhotoQueryVariables>;
+export const InsertCommentDocument = gql`
+    mutation InsertComment($comment: String!, $photoId: uuid!) {
+  insert_comments_one(object: {comment: $comment, photo_id: $photoId}) {
+    id
+    comment
+    created_at
+    firebase_user_profile {
+      displayName
+    }
+  }
+}
+    `;
+export type InsertCommentMutationFn = Apollo.MutationFunction<InsertCommentMutation, InsertCommentMutationVariables>;
+
+/**
+ * __useInsertCommentMutation__
+ *
+ * To run a mutation, you first call `useInsertCommentMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertCommentMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertCommentMutation, { data, loading, error }] = useInsertCommentMutation({
+ *   variables: {
+ *      comment: // value for 'comment'
+ *      photoId: // value for 'photoId'
+ *   },
+ * });
+ */
+export function useInsertCommentMutation(baseOptions?: Apollo.MutationHookOptions<InsertCommentMutation, InsertCommentMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertCommentMutation, InsertCommentMutationVariables>(InsertCommentDocument, options);
+      }
+export type InsertCommentMutationHookResult = ReturnType<typeof useInsertCommentMutation>;
+export type InsertCommentMutationResult = Apollo.MutationResult<InsertCommentMutation>;
+export type InsertCommentMutationOptions = Apollo.BaseMutationOptions<InsertCommentMutation, InsertCommentMutationVariables>;
+export const GetUserPhotosDocument = gql`
+    query GetUserPhotos {
+  photos {
+    id
+    photo_url
+    created_at
+    firebase_user_profile {
+      displayName
+    }
+    comments_aggregate {
+      aggregate {
+        count
+      }
+    }
+  }
+}
+    `;
+
+/**
+ * __useGetUserPhotosQuery__
+ *
+ * To run a query within a React component, call `useGetUserPhotosQuery` and pass it any options that fit your needs.
+ * When your component renders, `useGetUserPhotosQuery` returns an object from Apollo Client that contains loading, error, and data properties
+ * you can use to render your UI.
+ *
+ * @param baseOptions options that will be passed into the query, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options;
+ *
+ * @example
+ * const { data, loading, error } = useGetUserPhotosQuery({
+ *   variables: {
+ *   },
+ * });
+ */
+export function useGetUserPhotosQuery(baseOptions?: Apollo.QueryHookOptions<GetUserPhotosQuery, GetUserPhotosQueryVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useQuery<GetUserPhotosQuery, GetUserPhotosQueryVariables>(GetUserPhotosDocument, options);
+      }
+export function useGetUserPhotosLazyQuery(baseOptions?: Apollo.LazyQueryHookOptions<GetUserPhotosQuery, GetUserPhotosQueryVariables>) {
+          const options = {...defaultOptions, ...baseOptions}
+          return Apollo.useLazyQuery<GetUserPhotosQuery, GetUserPhotosQueryVariables>(GetUserPhotosDocument, options);
+        }
+export type GetUserPhotosQueryHookResult = ReturnType<typeof useGetUserPhotosQuery>;
+export type GetUserPhotosLazyQueryHookResult = ReturnType<typeof useGetUserPhotosLazyQuery>;
+export type GetUserPhotosQueryResult = Apollo.QueryResult<GetUserPhotosQuery, GetUserPhotosQueryVariables>;
 export const SignInDocument = gql`
     mutation SignIn($email: String!, $password: String!) {
   login(credentials: {email: $email, password: $password}) {
@@ -1359,6 +1523,78 @@ export function useSignUpMutation(baseOptions?: Apollo.MutationHookOptions<SignU
 export type SignUpMutationHookResult = ReturnType<typeof useSignUpMutation>;
 export type SignUpMutationResult = Apollo.MutationResult<SignUpMutation>;
 export type SignUpMutationOptions = Apollo.BaseMutationOptions<SignUpMutation, SignUpMutationVariables>;
+export const UploadPhotoDocument = gql`
+    mutation UploadPhoto($base64image: String!) {
+  upload_photo(base64image: $base64image) {
+    url
+  }
+}
+    `;
+export type UploadPhotoMutationFn = Apollo.MutationFunction<UploadPhotoMutation, UploadPhotoMutationVariables>;
+
+/**
+ * __useUploadPhotoMutation__
+ *
+ * To run a mutation, you first call `useUploadPhotoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useUploadPhotoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [uploadPhotoMutation, { data, loading, error }] = useUploadPhotoMutation({
+ *   variables: {
+ *      base64image: // value for 'base64image'
+ *   },
+ * });
+ */
+export function useUploadPhotoMutation(baseOptions?: Apollo.MutationHookOptions<UploadPhotoMutation, UploadPhotoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<UploadPhotoMutation, UploadPhotoMutationVariables>(UploadPhotoDocument, options);
+      }
+export type UploadPhotoMutationHookResult = ReturnType<typeof useUploadPhotoMutation>;
+export type UploadPhotoMutationResult = Apollo.MutationResult<UploadPhotoMutation>;
+export type UploadPhotoMutationOptions = Apollo.BaseMutationOptions<UploadPhotoMutation, UploadPhotoMutationVariables>;
+export const InsertPhotoDocument = gql`
+    mutation InsertPhoto($photoUrl: String!, $description: String!) {
+  insert_photos(objects: {photo_url: $photoUrl, description: $description}) {
+    affected_rows
+    returning {
+      description
+      photo_url
+      created_at
+    }
+  }
+}
+    `;
+export type InsertPhotoMutationFn = Apollo.MutationFunction<InsertPhotoMutation, InsertPhotoMutationVariables>;
+
+/**
+ * __useInsertPhotoMutation__
+ *
+ * To run a mutation, you first call `useInsertPhotoMutation` within a React component and pass it any options that fit your needs.
+ * When your component renders, `useInsertPhotoMutation` returns a tuple that includes:
+ * - A mutate function that you can call at any time to execute the mutation
+ * - An object with fields that represent the current status of the mutation's execution
+ *
+ * @param baseOptions options that will be passed into the mutation, supported options are listed on: https://www.apollographql.com/docs/react/api/react-hooks/#options-2;
+ *
+ * @example
+ * const [insertPhotoMutation, { data, loading, error }] = useInsertPhotoMutation({
+ *   variables: {
+ *      photoUrl: // value for 'photoUrl'
+ *      description: // value for 'description'
+ *   },
+ * });
+ */
+export function useInsertPhotoMutation(baseOptions?: Apollo.MutationHookOptions<InsertPhotoMutation, InsertPhotoMutationVariables>) {
+        const options = {...defaultOptions, ...baseOptions}
+        return Apollo.useMutation<InsertPhotoMutation, InsertPhotoMutationVariables>(InsertPhotoDocument, options);
+      }
+export type InsertPhotoMutationHookResult = ReturnType<typeof useInsertPhotoMutation>;
+export type InsertPhotoMutationResult = Apollo.MutationResult<InsertPhotoMutation>;
+export type InsertPhotoMutationOptions = Apollo.BaseMutationOptions<InsertPhotoMutation, InsertPhotoMutationVariables>;
 export const GetProfileDocument = gql`
     query GetProfile($id: String!) {
   user_profile(id: $id) {

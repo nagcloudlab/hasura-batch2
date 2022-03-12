@@ -2,6 +2,8 @@ import { Paper, Box, Typography } from "@material-ui/core";
 import React from "react";
 import { useParams } from "react-router-dom";
 import { useGetProfileQuery } from "../../generated/graphql";
+import { PhotoList } from "../photo-list/PhotoList";
+import { UploadPhoto } from "../upload-photo/UploadPhoto";
 
 interface Props { }
 
@@ -33,6 +35,8 @@ export const UserProfile = (props: Props) => {
           </Typography>
         </Box>
       </Paper>
+      <UploadPhoto />
+      <PhotoList />
     </>
   );
 };
